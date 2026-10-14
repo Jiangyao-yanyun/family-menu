@@ -204,14 +204,21 @@ select.mini{padding:6px 8px;border:2px solid var(--ink);border-radius:8px;backgr
 .ing-line{font-size:13.5px;color:var(--ink-soft);margin:0 0 11px;line-height:1.55;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .card-actions{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.icon-row{display:flex;gap:6px;justify-content:flex-end;margin-top:9px;padding-top:7px;border-top:1px dotted #ded3bc}
-.ic{
-  font-size:14px;line-height:1;padding:4px 10px;background:#fffdf6;color:var(--ink);
-  border:1.6px solid #b9ad9b;border-radius:8px 24px 9px 22px/22px 9px 24px 8px;cursor:pointer;
-  box-shadow:1px 2px 0 rgba(58,51,44,.32);transition:.12s;
+.icon-row{
+  display:flex;gap:7px;justify-content:flex-end;align-items:center;flex-wrap:wrap;
+  margin-top:10px;padding-top:8px;border-top:1px dotted #ded3bc;
 }
-.ic:hover{background:#fff4d6;border-color:var(--ink)}
+.ic{
+  flex:0 0 auto;width:36px;height:31px;padding:0;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:15px;line-height:1;background:#fffdf6;color:var(--ink);
+  border:1.6px solid #b9ad9b;border-radius:9px 22px 10px 20px/20px 10px 22px 9px;cursor:pointer;
+  box-shadow:1px 2px 0 rgba(58,51,44,.3);transition:.12s;
+}
+.ic:hover{background:#fff4d6;border-color:var(--ink);transform:translateY(-1px)}
 .ic:active{transform:translate(1px,2px);box-shadow:none}
+.ic[data-act="share"]:hover{background:#e8f7ee;border-color:#5f9e6e}
+.ic[data-act="del"]:hover{background:#ffe9ec;border-color:var(--red)}
 .card-actions .spacer{flex:1}
 
 /* ---------- 随机点菜 ---------- */
@@ -319,7 +326,6 @@ input[type=checkbox]{width:17px;height:17px;accent-color:var(--green);cursor:poi
   padding:12px 15px;border-radius:8px;margin-bottom:18px;box-shadow:2px 3px 0 rgba(58,51,44,.16);
   transform:rotate(-.35deg);
 }
-.footer{margin-top:36px;padding-top:14px;border-top:2px dashed #d3c7b0;color:var(--ink-soft);font-size:13.5px;font-family:var(--hand-b);line-height:1.75}
 .credit{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:6px}
 /* 提示条 */
 #toast{
@@ -492,13 +498,6 @@ input[type=checkbox]{width:17px;height:17px;accent-color:var(--green);cursor:poi
     </div>
     <div class="grid" id="sharedGrid"></div>
   </section>
-
-  <footer class="footer">
-    
-    <div class="credit">
-  
-    </div>
-  </footer>
 </div>
 
 <!-- ============ 弹窗 ============ -->
@@ -852,9 +851,9 @@ function cardHTML(r, mode){
   +   '</div>'
   +   (shared ? '' :
         '<div class="icon-row">'
-      + '<button class="ic" data-act="share" title="分享这道菜">📤 分享</button>'
-      + '<button class="ic" data-act="edit" title="修改">✎ 修改</button>'
-      + '<button class="ic" data-act="del" title="删除">🗑 删除</button>'
+      + '<button class="ic" data-act="share" title="分享这道菜" aria-label="分享这道菜">📤</button>'
+      + '<button class="ic" data-act="edit" title="修改这道菜" aria-label="修改这道菜">✎</button>'
+      + '<button class="ic" data-act="del" title="删除这道菜" aria-label="删除这道菜">🗑</button>'
       + '</div>')
   + '</article>';
 }
