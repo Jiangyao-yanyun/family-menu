@@ -374,7 +374,7 @@ input[type=checkbox]{width:17px;height:17px;accent-color:var(--green);cursor:poi
   <!-- ============ 页眉 ============ -->
   <header class="top">
     <h1 class="logo">
-      <span class="mark">我家的菜单本</span>
+      <span class="mark">徐涵家的菜单本</span>
       <sub><span class="doodle">🍳</span> 今天想吃点什么呢…</sub>
     </h1>
     <div class="top-tools">
@@ -469,9 +469,9 @@ input[type=checkbox]{width:17px;height:17px;accent-color:var(--green);cursor:poi
       <button class="btn ghost" id="btnClearMenu">清空这桌</button>
     </div>
     <div class="menu-list" id="menuList"></div>
-    <label class="inline" style="margin-top:14px">署名：<input id="authorInput" placeholder="厨房里的那位" style="border:none;border-bottom:2px solid #cdc1a9;background:transparent;outline:none;min-width:150px"></label>
+    <label class="inline" style="margin-top:14px">署名：<input id="authorInput" placeholder="林" style="border:none;border-bottom:2px solid #cdc1a9;background:transparent;outline:none;min-width:150px"></label>
     <div class="section-title">✎ 随手记</div>
-    <textarea id="menuNote" class="share-box" style="min-height:74px" placeholder="比如：今天娃不吃饭，加个鸡翅 / 冰箱里的番茄该用掉了"></textarea>
+    <textarea id="menuNote" class="share-box" style="min-height:74px" placeholder="比如：今天不吃饭，加个鸡翅 / 冰箱里的番茄该用掉了"></textarea>
   </section>
 
   <!-- ============ 采购清单 ============ -->
@@ -494,11 +494,9 @@ input[type=checkbox]{width:17px;height:17px;accent-color:var(--green);cursor:poi
   </section>
 
   <footer class="footer">
-    <div>✎ 关于这本菜单：预置 50 道家常菜，数据都存在你自己浏览器里（localStorage），不用登录、不联网也能增删改查和配菜。</div>
-    <div>✎ 图片走的是网络上的美食照片（已逐张核对与菜名对应）；断网或图片失效时，会自动换成手绘占位图，不影响使用。</div>
+    
     <div class="credit">
-      <span class="tag plain">分享链接＝你的网址 + 几十个字符的短码</span>
-      <span class="tag plain">接收方无需后台，打开即看</span>
+  
     </div>
   </footer>
 </div>
@@ -1124,7 +1122,7 @@ $('#btnClearMenu').addEventListener('click', function (){
   renderLibrary(); renderMenu(); renderShop(); renderTabs();
 });
 function menuText(recs, title, author){
-  const t = title || '我家的菜单';
+  const t = title || '徐涵家的菜单';
   let s = '【' + t + '】共 ' + recs.length + ' 道菜\n';
   recs.forEach((r, i) => { s += (i + 1) + '. ' + r.name + '（' + r.cat + '·' + r.diff + '·' + r.time + '分钟）\n'; });
   if (author) s += '—— 由 ' + author + ' 搭配\n';
@@ -1187,18 +1185,18 @@ function readShortCode(code){
   const recipes = nos.map(n => PRESET[n - 1]).filter(Boolean)
                      .map(r => Object.assign({}, r, { id: uid() }));
   if (!recipes.length) throw new Error('分享码里没有可识别的菜');
-  return { title: title || '我家的菜单', author: author, date: '', recipes: recipes };
+  return { title: title || '徐涵家的菜单', author: author, date: '', recipes: recipes };
 }
 
 /* 完整码： [1, 标题, 署名, 日期, [[名,分类,难度,用时,图,食材,步骤,贴士,图标], ...]] */
 function buildPayload(recs, title, author){
-  return [1, title || '我家的菜单', author || '', new Date().toISOString().slice(0, 10),
+  return [1, title || '徐涵家的菜单', author || '', new Date().toISOString().slice(0, 10),
     recs.map(r => [r.name, r.cat, r.diff, r.time, r.img, r.ing.join('|'), r.steps.join('|'), r.tips || '', r.emoji || ''])]
 }
 function unpackPayload(p){
   if (!Array.isArray(p) || p[0] !== 1 || !Array.isArray(p[4])) throw new Error('分享数据格式不对');
   return {
-    title: p[1] || '我家的菜单',
+    title: p[1] || '徐涵家的菜单',
     author: p[2] || '',
     date: p[3] || '',
     recipes: p[4].map(a => normalizeRecipe({
@@ -1309,7 +1307,7 @@ async function openShareModal(recs, title){
   });
   const ns = $('#btnNativeShare');
   if (ns) ns.addEventListener('click', function (){
-    navigator.share({ title: title || '我家的菜单', text: menuText(recs, title, state.author), url: link }).catch(() => {});
+    navigator.share({ title: title || '徐涵家的菜单', text: menuText(recs, title, state.author), url: link }).catch(() => {});
   });
   $('#btnSaveBase').addEventListener('click', function (){
     const v = $('#baseInput').value.trim();
@@ -1506,7 +1504,7 @@ $('#btnExport').addEventListener('click', function (){
   const blob = new Blob([JSON.stringify({ v:1, recipes:state.recipes }, null, 1)], { type:'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = '我家的菜单本-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.download = '徐涵家的菜单本-' + new Date().toISOString().slice(0, 10) + '.json';
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 4000);
   toast('备份文件已下载');
